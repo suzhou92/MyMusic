@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mymusic-server:
+    build: .
+    container_name: mymusic-server
+    ports:
+      - "5173:5173"
+    volumes:
+      # 映射 NAS 音乐目录
+      - /vol2/1000/3t/音乐:/music:ro
+      # 持久化数据库
+      - ./data:/data
+    environment:
+      - MUSIC_DIR=/music
+      - DB_PATH=/data/music.db
+    restart: unless-stopped
